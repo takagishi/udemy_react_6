@@ -1,9 +1,21 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { SecondaryButton } from "../atoms/button/SecondaryButton";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../store/userState";
 
 export const Top = () => {
-  const onClickAdmin = () => alert("管理");
-  const onClickGeneral = () => alert("一般");
+  console.log("Top");
+  const setUserInfo = useSetRecoilState(userState);
+  const navigate = useNavigate();
+  const onClickAdmin = () => {
+    setUserInfo({ isAdmin: true });
+    navigate("/users");
+  };
+  const onClickGeneral = () => {
+    setUserInfo({ isAdmin: false });
+    navigate("/users");
+  };
 
   return (
     <SContainer>
