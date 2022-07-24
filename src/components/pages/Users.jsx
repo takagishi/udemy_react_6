@@ -5,6 +5,7 @@ import { UserCard } from "../organisms/user/UserCard";
 
 import { useRecoilState } from "recoil";
 import { userState } from "../../store/userState";
+import axios from "axios";
 const users = [...Array(10).keys()].map((val) => {
   return {
     id: val,
@@ -23,9 +24,34 @@ export const Users = () => {
   console.log("Users");
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const onClickSwitch = () => setUserInfo({ isAdmin: !userInfo.isAdmin });
+
+  const onClickUsers = () => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const onClickUsers1 = () => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users/1")
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <SContainer>
       <h2>ユーザー一覧</h2>
+      <SecondaryButton onClick={onClickUsers}>user</SecondaryButton>
+      <br />
+      <SecondaryButton onClick={onClickUsers1}>id=1のユーザー</SecondaryButton>
+      <br />
       <SearchInput />
       <br />
       <SecondaryButton onClick={onClickSwitch}>切り替え</SecondaryButton>
